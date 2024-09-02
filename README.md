@@ -5,13 +5,13 @@ This BASH script allows users to fill in whichever **APT** and **FLATPAK** packa
 
 	**[Flathub Setup](https://flathub.org/setup)**
 
-2. For **FLATPAKS** locate the ***Application ID*** of the app you want, paste it after the '*install_flatpak*' section the script for flatpak apps with quotes. 
+2. For **FLATPAKS** locate the ***Application ID*** of the app you want, paste it after the '*install_flatpak*' function the script for flatpak apps with quotes. 
 
 	- Example (For KeePassXC)
 
 	```install_flatpak "org.keepassxc.KeePassXC"```
 
-3. For **APT** packages, simply place quotes around the package you wish to install. Then place it after of the '*install_apt*' section of the script.
+3. For **APT** packages, simply place quotes around the package you wish to install. Then place it after of the '*install_apt*' function of the script.
 
 	- Example (for TMUX): 
 
