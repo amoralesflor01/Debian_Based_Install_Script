@@ -95,7 +95,7 @@ install_flatpak "org.cryptomator.Cryptomator"
 
 # Clean up
 sudo apt-get autoremove -y || echo "Failed to autoremove packages" >> $LOG_FILE
-sudo apt-get clean || echo "Failed to clean" >> $LOG_FILE
+sudo apt-get autoclean || echo "Failed to clean" >> $LOG_FILE
 
 echo "All installations are complete! Check $LOG_FILE for any errors."
 

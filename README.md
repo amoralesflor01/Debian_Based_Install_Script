@@ -11,7 +11,7 @@ This BASH script allows users to fill in whichever **APT** and **FLATPAK** packa
 
 	```install_flatpak "org.keepassxc.KeePassXC"```
 
-3. For **APT** packages, simply place quotes around the package you wish to install. Then place it in front of the '*install_apt*' 
+3. For **APT** packages, simply place quotes around the package you wish to install. Then place it after of the '*install_apt*' section of the script.
 
 	- Example (for TMUX): 
 
