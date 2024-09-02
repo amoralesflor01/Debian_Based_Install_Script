@@ -5,8 +5,8 @@ LOG_FILE="install_errors.log"
 echo "Installation errors:" > $LOG_FILE
 
 # Update and upgrade system
-sudo apt-get update && sudo apt-get dist-upgrade -y || echo "Failed to update package list AND full dist-upgrade" >> $LOG_FILE
-#sudo apt-get update -y || echo "Failed to update package list" >> $LOG_FILE
+#sudo apt-get update && sudo apt-get dist-upgrade -y || echo "Failed to update package list AND full dist-upgrade" >> $LOG_FILE
+sudo apt-get update -y || echo "Failed to update package list" >> $LOG_FILE
 sudo apt-get upgrade -y || echo "Failed to upgrade packages" >> $LOG_FILE
 
 # Install required dependencies
