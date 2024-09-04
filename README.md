@@ -18,5 +18,3 @@ This BASH script allows users to fill in whichever **APT** and **FLATPAK** packa
 	```install_apt "tmux"```
 
 4. If you look at the code, there are examples of how to do this and some packages I use so remove what you do not need and add whatever you wish once you clone the repo.
-
-5. Run script :D
