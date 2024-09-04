@@ -5,16 +5,34 @@ This BASH script allows users to fill in whichever **APT** and **FLATPAK** packa
 
 	**[Flathub Setup](https://flathub.org/setup)**
 
-2. For **FLATPAKS** locate the ***Application ID*** of the app you want, paste it after the '*install_flatpak*' function the script for flatpak apps with quotes. 
+1. Clone the repo using this command:
+
+	```git clone https://github.com/amoralesflor01/Debian_Based_Install_Script.git```
+
+1. Change into repo directory:
+
+	```cd Debian_Based_Install_Script```
+
+1. Use your editor of choice to make modifcations to the script based on the apps you want to install.
+
+1. For **FLATPAKS** locate the ***Application ID*** of the app you want, paste it after the '*install_flatpak*' function the script for flatpak apps with quotes. 
 
 	- Example (For KeePassXC)
 
 	```install_flatpak "org.keepassxc.KeePassXC"```
 
-3. For **APT** packages, simply place quotes around the package you wish to install. Then place it after of the '*install_apt*' function of the script.
+1. For **APT** packages, simply place quotes around the package you wish to install. Then place it after of the '*install_apt*' function of the script.
 
 	- Example (for TMUX): 
 
 	```install_apt "tmux"```
 
-4. If you look at the code, there are examples of how to do this and some packages I use so remove what you do not need and add whatever you wish once you clone the repo.
+1. If you look at the code, there are examples of how to do this and some packages I use so remove what you do not need and add whatever you wish.
+
+1. Add executable permissions to the script using this command:
+
+	```chmod +x install_apps.sh```
+
+1. Run the script:
+
+	```./install_apps.sh```
