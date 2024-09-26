@@ -15,17 +15,25 @@ This BASH script allows users to fill in whichever **APT** and **FLATPAK** packa
 
 1. Use your editor of choice to make modifcations to the script based on the apps you want to install.
 
-1. For **FLATPAKS** locate the ***Application ID*** of the app you want, paste it after the '*install_flatpak*' function the script for flatpak apps with quotes. 
-
-	- Example (For KeePassXC)
-
-	```install_flatpak "org.keepassxc.KeePassXC"```
-
-1. For **APT** packages, simply place quotes around the package you wish to install. Then place it after of the '*install_apt*' function of the script.
+1. For **APT** packages, simply place quotes around the package you wish to install. Then place it in the '*APT_PACKAGES*' array. Then the **install_apt** will install all apt packages you listed.
 
 	- Example (for TMUX): 
 
-	```install_apt "tmux"```
+	```
+	APT_PACKAGES=(
+    	"tmux"
+	)
+	```
+
+1. For **FLATPAKS** locate the ***Application ID*** of the app you want, paste it into the '*FLATPAK_APPS*' array with quotes. Then the **install_flatpak** will install all flatpaks you listed.
+
+	- Example (For KeePassXC)
+
+	```
+	FLATPAK_APPS=(
+		"org.keepassxc.KeePassXC"
+	)
+	```
 
 1. If you look at the code, there are examples of how to do this and some packages I use so remove what you do not need and add whatever you wish.
 
