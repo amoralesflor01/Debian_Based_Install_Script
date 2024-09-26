@@ -1,40 +1,35 @@
 #!/bin/bash
 
 # Log file for errors
-LOG_FILE="install_errors.log"
+LOG_FILE="$HOME/install_errors.log"
 echo "Installation errors:" > $LOG_FILE
 
-# Update and upgrade system
-#sudo apt-get update && sudo apt-get dist-upgrade -y || echo "Failed to update package list AND full dist-upgrade" >> $LOG_FILE
-sudo apt-get update -y || echo "Failed to update package list" >> $LOG_FILE
-sudo apt-get upgrade -y || echo "Failed to upgrade packages" >> $LOG_FILE
+# Function to log and echo messages
+log_and_echo() {
+    echo "$1" | tee -a $LOG_FILE
+}
 
-# Install required dependencies
-#sudo apt-get install -y software-properties-common apt-transport-https curl || echo "Failed to install dependencies" >> $LOG_FILE
+# Update and upgrade system
+log_and_echo "Updating package lists..."
+sudo apt-get update -y || log_and_echo "Failed to update package list"
+log_and_echo "Upgrading installed packages..."
+sudo apt-get upgrade -y || log_and_echo "Failed to upgrade packages"
 
 # Function to check if a package is installed
 is_installed() {
     dpkg -l | grep -q "^ii\s*$1\s"
 }
 
-# Function to add PPAs and install packages
-#install_ppa() {
-#    sudo add-apt-repository -y ppa:$1 || { echo "Failed to add PPA: $1" >> $LOG_FILE; return; }
-#    sudo apt-get update -y || { echo "Failed to update after adding PPA: $1" >> $LOG_FILE; return; }
-#    if ! is_installed $2; then
-#        sudo apt-get install -y $2 || echo "Failed to install package from PPA: $2" >> $LOG_FILE
-#    else
-#        echo "Package $2 is already installed. Skipping."
-#    fi
-#}
-
 # Function to install apt-get packages
 install_apt() {
-    if ! is_installed $1; then
-        sudo apt-get install -y $1 || echo "Failed to install package: $1" >> $LOG_FILE
-    else
-        echo "Package $1 is already installed. Skipping."
-    fi
+    for package in "$@"; do
+        if ! is_installed "$package"; then
+            log_and_echo "Installing apt package: $package"
+            sudo apt-get install -y "$package" || log_and_echo "Failed to install package: $package"
+        else
+            log_and_echo "Package $package is already installed. Skipping."
+        fi
+    done
 }
 
 # Function to check if a Flatpak application is installed
@@ -44,58 +39,66 @@ is_flatpak_installed() {
 
 # Function to install Flatpak applications
 install_flatpak() {
-    if ! is_flatpak_installed $1; then
-        flatpak install -y flathub $1 || echo "Failed to install Flatpak app: $1" >> $LOG_FILE
-    else
-        echo "Flatpak app $1 is already installed. Skipping."
-    fi
+    for app in "$@"; do
+        if ! is_flatpak_installed "$app"; then
+            log_and_echo "Installing Flatpak app: $app"
+            flatpak install -y flathub "$app" || log_and_echo "Failed to install Flatpak app: $app"
+        else
+            log_and_echo "Flatpak app $app is already installed. Skipping."
+        fi
+    done
 }
 
-# Add PPAs and install applications
-#install_ppa "ppa:deadsnakes/ppa" "python3.9"
-#install_ppa "ppa:obsproject/obs-studio" "obs-studio"
+# List of apt packages to install
+APT_PACKAGES=(
+    "pip"
+    "curl"
+    "vim"
+    "tmux"
+    "xclip"
+    "neofetch"
+    "net-tools"
+    "macchanger"
+    "exfat-utils"
+    "converseen"
+    "soundconverter"
+    "git"
+    "htop"
+    "gpa"
+    "ffmpeg"
+)
 
-# Install apt-get packages
-install_apt "pip"
-install_apt "curl"
-install_apt "vim"
-install_apt "tmux"
-install_apt "xclip"
-install_apt "neofetch"
-install_apt "net-tools"
-install_apt "macchanger"
-install_apt "exfat-utils"
-install_apt "converseen"
-install_apt "soundconverter"
-install_apt "git"
-install_apt "htop"
-install_apt "gpa"
-install_apt "ffmpeg"
+# List of Flatpak apps to install
+FLATPAK_APPS=(
+    "org.keepassxc.KeePassXC"
+    "com.bitwarden.desktop"
+    "org.kde.kleopatra"
+    "org.qbittorrent.qBittorrent"
+    "com.obsproject.Studio"
+    "org.signal.Signal"
+    "org.videolan.VLC"
+    "com.github.tchx84.Flatseal"
+    "io.freetubeapp.FreeTube"
+    "org.standardnotes.standardnotes"
+    "com.brave.Browser"
+    "org.cryptomator.Cryptomator"
+    # "org.raspberrypi.rpi-imager"
+    # "org.gimp.GIMP"
+    # "org.audacityteam.Audacity"
+    # "io.atom.Atom"
+    # "us.zoom.Zoom"
+    # "org.onionshare.OnionShare"
+)
+
+# Install apt packages
+install_apt "${APT_PACKAGES[@]}"
 
 # Install Flatpak applications
-install_flatpak "org.keepassxc.KeePassXC"
-install_flatpak "com.bitwarden.desktop"
-install_flatpak "org.kde.kleopatra"
-install_flatpak "org.qbittorrent.qBittorrent"
-#install_flatpak "me.kozec.syncthingtk"
-#install_flatpak "org.raspberrypi.rpi-imager"
-install_flatpak "com.obsproject.Studio"
-install_flatpak "org.signal.Signal"
-install_flatpak "org.videolan.VLC"
-install_flatpak "com.github.tchx84.Flatseal"
-install_flatpak "io.freetubeapp.FreeTube"
-install_flatpak "org.standardnotes.standardnotes"
-#install_flatpak "org.gimp.GIMP"
-#install_flatpak "org.audacityteam.Audacity"
-#install_flatpak "io.atom.Atom"
-install_flatpak "com.brave.Browser"
-install_flatpak "org.cryptomator.Cryptomator"
-#install_flatpak "us.zoom.Zoom"
-#install_flatpak "org.onionshare.OnionShare"
+install_flatpak "${FLATPAK_APPS[@]}"
 
 # Clean up
-sudo apt-get autoremove -y || echo "Failed to autoremove packages" >> $LOG_FILE
-sudo apt-get autoclean || echo "Failed to clean" >> $LOG_FILE
+log_and_echo "Cleaning up unnecessary packages..."
+sudo apt-get autoremove -y || log_and_echo "Failed to autoremove packages"
+sudo apt-get autoclean || log_and_echo "Failed to clean up"
 
-echo "All installations are complete! Check $LOG_FILE for any errors."
-
+log_and_echo "All installations are complete! Check $LOG_FILE for any errors."
