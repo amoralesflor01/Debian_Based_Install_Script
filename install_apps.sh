@@ -58,13 +58,13 @@ APT_PACKAGES=(
     "xclip"
     "neofetch"
     "net-tools"
-    "macchanger"
+    #"macchanger"
     "exfat-utils"
-    "converseen"
-    "soundconverter"
+    #"converseen"
+    #"soundconverter"
     "git"
     "htop"
-    "gpa"
+    #"gpa"
     "ffmpeg"
 )
 
@@ -72,7 +72,7 @@ APT_PACKAGES=(
 FLATPAK_APPS=(
     "org.keepassxc.KeePassXC"
     "com.bitwarden.desktop"
-    "org.kde.kleopatra"
+    #"org.kde.kleopatra"
     "org.qbittorrent.qBittorrent"
     "com.obsproject.Studio"
     "org.signal.Signal"
@@ -82,11 +82,14 @@ FLATPAK_APPS=(
     "org.standardnotes.standardnotes"
     "com.brave.Browser"
     "org.cryptomator.Cryptomator"
+    "flatpak install flathub org.gnome.Rhythmbox3"
+    "flatpak install flathub net.fasterland.converseen"
+    "flatpak install flathub org.soundconverter.SoundConverter"
     # "org.raspberrypi.rpi-imager"
     # "org.gimp.GIMP"
     # "org.audacityteam.Audacity"
     # "io.atom.Atom"
-    # "us.zoom.Zoom"
+    "us.zoom.Zoom"
     # "org.onionshare.OnionShare"
 )
 
